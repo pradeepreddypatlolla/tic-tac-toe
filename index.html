@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+   <div class="main">
+
+   
+    <div class="game-box">
+        <h1 class="title">Tic Tac Toe</h1>
+        <div class="">
+            <div class="row">
+                <div class="col" id="cell00"></div>
+                <div class="col" id="cell01"></div>
+                <div class="col" id="cell02"></div>
+            </div>
+            <div class="row">
+                <div class="col" id="cell10"></div>
+                <div class="col" id="cell11"></div>
+                <div class="col" id="cell12"></div>
+            </div>
+            <div class="row">
+                <div class="col" id="cell20"></div>
+                <div class="col" id="cell21"></div>
+                <div class="col" id="cell22"></div>
+            </div>
+
+        </div>
+
+        <div >
+            <button class="btn" id="reset">Reset</button>
+        </div>
+
+       
+       
+       
+    </div>
+
+    <div class="game-details">
+        <h3>You play with 'X'. Computer plays with 'O'</h3>
+        <h4>Game Started by : <span id="turn"></span> </h4>
+        <h4>Your Wins : <span id="your-wins">  </span> </h4> 
+        <h4>Computer Wins : <span id="computer-wins"></span> </h4>
+
+    </div>
+</div>
+</body>
+<script src="script.js"></script>
+</html>
