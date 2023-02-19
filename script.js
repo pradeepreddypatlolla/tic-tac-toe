@@ -108,7 +108,7 @@ const generatePossiblePairs = function(moves,possiblePairs){
 
 const getNextMove = function(){
 
-    for(let i=0;i<9;i++){ // checking if we can win in next move
+    for(let i=0;i<9;i++){ // checking if computer can win in next move
         if(humanMoves.indexOf(i)===-1 && computerMoves.indexOf(i)===-1){
 
             if(checkIsGameOver(i,possibleComputerPairs)){
@@ -118,7 +118,7 @@ const getNextMove = function(){
         }
     }
 
-    for(let i=0;i<9;i++){ // checking if 
+    for(let i=0;i<9;i++){ // checking if human can win in next move so that the computer makes the same move to stop human from winning
         if(humanMoves.indexOf(i)===-1 && computerMoves.indexOf(i)===-1){
 
             if(checkIsGameOver(i,possibleHumanPairs)){
@@ -132,27 +132,49 @@ const getNextMove = function(){
     }
 
    
-
-    for(let i=0;i<9;i++){
-        if(humanMoves.indexOf(i)===-1 && computerMoves.indexOf(i)===-1){
+    
+    for(let i=0;i<9;i++){ // iterating through all the possible cells to make a best move
+        if(humanMoves.indexOf(i)===-1 && computerMoves.indexOf(i)===-1){ 
                 let tempComputerMoves = [...computerMoves]
-                tempComputerMoves.push(i)
+                tempComputerMoves.push(i) // taking i into temporary computer moves and if it is the best move it will be returned
+                tempComputerMoves.sort()
+                console.log(tempComputerMoves)
+
+
+                // generating possible pairs of computer moves after adding i to the computer moves. 
+                //With these generated pairs we will combine with each of the human moves and check if the game is over with this combination of computer pair and human move. 
+                //If game can be finished with combination of computer pair and a human move then it is not a correct move for the computer. 
                 let tempPossibleComputerPairs = generatePossiblePairs(tempComputerMoves,[])
-                if(tempPossibleComputerPairs.length===0){
-                    continue;
+                if(tempPossibleComputerPairs.length===0){ 
+                    continue; // if there are no possible pairs after taking i as next move then it is not correct move for computer as it cannot win the using this move
                 }
+                let flag=true // initial value true
                 for(let j of humanMoves){
-                    let tempPossibleComputerPairs2 = generatePossiblePairs([i,j].sort(),[])
-                    if(!checkIsGameOver(j,tempPossibleComputerPairs) && tempPossibleComputerPairs2.length!==0 ){
-                        return i
+                    
+                    console.log(j,tempPossibleComputerPairs, checkIsGameOver(j,tempPossibleComputerPairs));
+                    if(checkIsGameOver(j,tempPossibleComputerPairs)){
+                        flag=false // we are making flag to false it means we cant use this value of i
+                        break
                     }
+
+                    let tempPossibleComputerPairs2 = generatePossiblePairs([i,j].sort(),[])
+                    if(tempPossibleComputerPairs2.length===0){
+                        flag=false // we are making flag to false it means we cant use this value of i
+                        break
+                    }
+
                 }
+                console.log(flag);
+                if(flag){
+                    return i
+                }
+
                       
         }
 
     }
 
-
+    // Generating a random move for computer from remaining moves. This is generally for the first time
     let remainingMoves = [0,1,2,3,4,5,6,7,8].filter((a)=>{
             if(humanMoves.indexOf(a)===-1 && computerMoves.indexOf(a)===-1 ){
                 return true
@@ -173,8 +195,9 @@ const checkIsGameOver = function(newOption,possiblePairs){
     for(let i=0;i<possiblePairs.length;i++){
         let temp=""+newOption+possiblePairs[i]
         temp=temp.split("").sort().join("")
+
         if(winningPatterns.indexOf(temp)!==-1){
-            
+            console.log(temp)
             
             return true
         }
