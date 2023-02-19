@@ -69,7 +69,7 @@ const generatePossiblePairs = function(moves,possiblePairs){
              }
          }
          else if(a===2){
-             if([4,5,7,8].indexOf(b)!==-1 && possiblePairs.indexOf(""+a+b)===-1){
+             if([4,5,6,7,8].indexOf(b)!==-1 && possiblePairs.indexOf(""+a+b)===-1){
                 possiblePairs.push(""+a+b)
              }
          }
