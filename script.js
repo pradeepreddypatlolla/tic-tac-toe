@@ -18,6 +18,7 @@ document.getElementById("computer-wins").innerHTML=computerWins
 document.getElementById('turn').innerHTML=turn
 
 const resetGame = function(){
+    isGameOver=false
     humanMoves=[]
     computerMoves=[]
     possibleComputerPairs=[]
@@ -86,6 +87,16 @@ const generatePossiblePairs = function(moves,possiblePairs){
              if(b===8 && possiblePairs.indexOf(""+a+b)===-1){
                 possiblePairs.push(""+a+b)
              }
+         }
+         else if(a===6){
+            if([7,8].indexOf(b)!==-1 && possiblePairs.indexOf(""+a+b)===-1){
+                possiblePairs.push(""+a+b)
+            }
+         }
+         else if(a===7){
+            if(b===8 && possiblePairs.indexOf(""+a+b)===-1){
+                possiblePairs.push(""+a+b)
+            }
          }
      }
  }
@@ -163,7 +174,7 @@ const checkIsGameOver = function(newOption,possiblePairs){
         let temp=""+newOption+possiblePairs[i]
         temp=temp.split("").sort().join("")
         if(winningPatterns.indexOf(temp)!==-1){
-            isGameOver=true
+            
             
             return true
         }
@@ -174,10 +185,16 @@ const checkIsGameOver = function(newOption,possiblePairs){
 }
 
 const userMadeMove = function(cell){
-    humanMoves.push(cell)
+    
+    if(isGameOver || humanMoves.indexOf(cell)!==-1 || computerMoves.indexOf(cell)!==-1 ){ // If user clicks the cell which is already filled then we return without 
+        return
+    }
+
     document.getElementById("cell"+mapper[cell]).innerHTML = humanSymbol
+    humanMoves.push(cell)
     humanMoves.sort()
     if(checkIsGameOver(cell,possibleHumanPairs)){
+        isGameOver=true
         alert("Game Over! Won by You")
         humanWins+=1
         winner='human'
@@ -185,7 +202,7 @@ const userMadeMove = function(cell){
         
     }
     possibleHumanPairs= generatePossiblePairs(humanMoves,[...possibleHumanPairs])
-   console.log("Human Moves - ",humanMoves)
+    console.log("Human Moves - ",humanMoves)
     console.log("Possible Human moves", possibleHumanPairs)
     let computerNextMove = getNextMove()
     
@@ -194,6 +211,7 @@ const userMadeMove = function(cell){
    
     computerMoves.sort()
     if(checkIsGameOver(computerNextMove,possibleComputerPairs)){
+        isGameOver=true
         alert("Game Over! Won by computer")
         computerWins+=1
         winner="computer"

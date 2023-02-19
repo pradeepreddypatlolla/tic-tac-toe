@@ -13,15 +13,19 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 .game-box{
-    margin-top: 10vh;
+    
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   
 
+}
+.game-box h1{
+    margin-bottom: 10vh;
 }
 .game-details{
     
@@ -38,12 +42,31 @@ body{
     min-width: 150px;
     min-height: 150px;
     color: white;
-    font-size: 30px;
+    font-size: 50px;
 
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #fff;
+}
+
+.col:nth-child(1){
+    
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.col:nth-child(2){
+    border-top: none;
+    border-right: none;
+}
+.col:nth-child(3){
+    border-top: none;
+    border-right: none;
+}
+
+.row:nth-child(3) .col{
+    border-bottom: none;
 }
 .btn{
     
