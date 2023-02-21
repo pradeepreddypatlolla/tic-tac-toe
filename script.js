@@ -10,6 +10,7 @@ let computerMoves=[]
 let possibleHumanPairs = []
 let possibleComputerPairs=[]
 const winningPatterns = ["012","345","678","036","147","258","048","246"]
+wonByPattern  = ""
 const mapper = {0:"00",1:"01",2:"02",3:"10",4:"11",5:"12",6:"20",7:"21",8:"22"}
 
 
@@ -198,7 +199,7 @@ const checkIsGameOver = function(newOption,possiblePairs){
 
         if(winningPatterns.indexOf(temp)!==-1){
             console.log(temp)
-            
+            wonByPattern=temp
             return true
         }
 
@@ -207,6 +208,14 @@ const checkIsGameOver = function(newOption,possiblePairs){
     
 }
 
+const glowCells = function(){
+    for(let i of wonByPattern){
+        document.getElementById("cell"+mapper[Number.parseInt(i)]).style.display = "none"
+    }
+    for(let i of wonByPattern){
+        document.getElementById("cell"+mapper[Number.parseInt(i)]).style.display = "flex"
+    }
+}
 const userMadeMove = function(cell){
     
     if(isGameOver || humanMoves.indexOf(cell)!==-1 || computerMoves.indexOf(cell)!==-1 ){ // If user clicks the cell which is already filled then we return without 
@@ -221,6 +230,8 @@ const userMadeMove = function(cell){
         alert("Game Over! Won by You")
         humanWins+=1
         winner='human'
+        glowCells()
+        
         return
         
     }
@@ -237,6 +248,7 @@ const userMadeMove = function(cell){
         isGameOver=true
         alert("Game Over! Won by computer")
         computerWins+=1
+        glowCells()
         winner="computer"
         return
 
